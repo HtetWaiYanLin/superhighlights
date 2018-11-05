@@ -1,0 +1,62 @@
+<!--
+  Generated template for the AllVideosPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="super">
+    <ion-title>All Videos</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+
+<ion-content>
+  <div *ngIf="videosD">
+    <ion-card *ngFor="let video of videosD | async"  (click)="openPlaylist(video)" class="playlist-page">
+      <ion-row *ngIf="video.video_detail.url">
+        <ion-col col-4 class="playlist-thumb">
+          <!--<img src="{{ video.url }}" alt="{{ video.title }}">-->
+          <div class="thumbnail">
+            <img  [src]="video.video_detail.imageurl" />
+            <div class="caption">
+              <img style="width: 30px;height: 30px;" src="assets/imgs/video.png" />
+            </div>
+          </div>
+        </ion-col>
+        <ion-col col-8 text-wrap>
+          <div>
+            <h5>{{ video.video_detail.title }}</h5>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+  </div>
+</ion-content>
+
+
+
+
+
+
+
+<!--<ion-content style="background-color: black;" fullscreen>-->
+  <!--<ion-card-content *ngFor="let vd of videosD | async;let k=index;" style="padding: 0px 15px 0px 15px;" >-->
+    <!--<ion-card-title >-->
+      <!--<div class="video-container">-->
+        <!--<video (playing)="onPlayingVideo($event,k)" id="vodo" controls="controls" poster="assets/imgs/goal.jpg" class="resize_fit_center" controlsList="nodownload"  webkit-playsinline="webkit-playsinline" class="myPlayer" style="width: 100%;">-->
+          <!--<source src="{{vd.url}}" type="video/mp4">-->
+        <!--</video>-->
+      <!--</div>-->
+    <!--</ion-card-title>-->
+    <!--<ion-item class="textDesign" no-lines>-->
+      <!--<h3 class="ptextDesignB" text-wrap>{{vd.title}}</h3>-->
+      <!--<p class="ptextDesign" text-wrap>{{vd.detail}}</p>-->
+    <!--</ion-item>-->
+  <!--</ion-card-content>-->
+
+
+<!--</ion-content>-->

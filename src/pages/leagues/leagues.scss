@@ -1,0 +1,102 @@
+page-leagues {
+  .scroll-content {
+    padding: 0 !important;
+  }
+  img {
+    display: block;
+  }
+
+  .thumbnail {
+    position: relative;
+    // display: inline-block;
+  }
+
+  .caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate( -50%, -50% );
+    text-align: center;
+    color: white;
+    font-weight: bold;
+  }
+  ion-card {
+    position: relative;
+
+  }
+
+  .playlist-page{
+    text-align: left;
+    padding: 0px;
+    box-shadow: 0 0 5px #CFD8DC;
+
+  }
+  .playlist-thumb{
+    padding: 0px;
+  }
+  .playlist-page .thumbnail >img{
+    min-height: 70px;
+    // border-radius: 5px;
+
+  }
+
+
+.crdDesign{
+  margin: 0;
+  width:100% !important ;
+}
+
+  .crdDesign .col{
+    padding: 0px;
+  }
+  .imgCrdDesign{
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 0 5px #CFD8DC;
+
+  }
+  .imgCrdDesign img{
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    height: 50px;
+    margin: 0 auto;
+    width: 50px;
+    padding: 12px;
+  }
+  .imgCrdDesign p{
+    padding: 7px;
+    background-color: #ffffff;
+  }
+
+
+  .imgDiv {
+    background: #546e7a;
+
+  }
+    .imgCrdDesignOpacity{
+
+      margin-left: 10px;
+      margin-right: 10px;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 0 5px #CFD8DC;
+
+    }
+  .imgCrdDesignOpacity img{
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    height: 50px;
+    margin: 0 auto;
+    width: 50px;
+    padding: 12px;
+  }
+  .imgCrdDesignOpacity p{
+    padding: 7px;
+    background-color: #ffffff;
+    opacity: 0.5;
+  }
+}

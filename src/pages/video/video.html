@@ -1,0 +1,19 @@
+<ion-content style="background-color: black;" fullscreen>
+
+  <div style="padding-left:15px;padding-right: 15px;padding-top: 5px"  (click)="backPage()">  <ion-icon name="md-arrow-back"  style="color: #fff;font-size: 1.6em"></ion-icon> </div>
+
+  <ion-card-content style="padding: 0px 15px 0px 15px;" >
+    <ion-card-title >
+      <div class="video-container">
+        <video (playing)="onPlayingVideo($event)" id="vodo" autoplay="autoplay" controls="controls" [poster]="playvideo.video_detail.imageurl" class="resize_fit_center" controlsList="nodownload"  webkit-playsinline="webkit-playsinline" class="myPlayer" style="width: 100%;">
+          <source src="{{playvideo.video_detail.url}}" type="video/mp4">
+        </video>
+      </div>
+    </ion-card-title>
+    <ion-item class="textDesign" no-lines>
+      <h3 class="ptextDesignB" text-wrap>{{playvideo.video_detail.title}}</h3>
+      <p class="ptextDesign" text-wrap>{{playvideo.video_detail.detail}}</p>
+      <p class="ptextDesign" text-wrap>{{playvideo.created.toDate()}}</p>
+    </ion-item>
+  </ion-card-content>
+</ion-content>

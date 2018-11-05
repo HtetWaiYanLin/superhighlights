@@ -1,0 +1,54 @@
+<!--
+  Generated template for the ProfilePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<!--<ion-header>-->
+
+  <!--<ion-navbar color="super">-->
+    <!--<ion-title>Profile</ion-title>-->
+  <!--</ion-navbar>-->
+
+<!--</ion-header>-->
+
+
+<ion-content fullscreen style="background:#CFD8DC ">
+  <!--<div style="padding-left:15px;padding-right: 15px;padding-top: 5px;color:#37474F;font-weight: 600"  (click)="backPage()">-->
+    <!--<ion-icon name="md-arrow-back"  style="color: #37474F;font-size: 1.6em">&nbsp;&nbsp;Profile</ion-icon>-->
+  <!--</div>-->
+
+
+  <div text-center>
+    <ion-row (click)="backPage()">
+      <div (click)="backPage()" style="z-index: 10;position: absolute;color: #ffffff;font-size: 1.2em;margin-top: 10px; padding-left: 16px;">
+        <ion-icon name="md-arrow-back"  style="color: #ffffff;font-size: 1.4em"></ion-icon>
+      </div>
+      <div>
+        <img src="{{fbData.photoURL}}" class="imgDesign"  menuClose onError="this.src = 'assets/imgs/boy.png'">
+      </div>
+    </ion-row>
+
+
+    <ion-row style="margin-top: 15px">
+      <div class="changeProfile" (click)="editData()" text-center>
+        Change Picture <ion-icon name="ios-create-outline"  style="color: #37474F;font-size: 1.6em"></ion-icon>
+      </div>
+    </ion-row>
+
+    <ion-row style="margin-top: 10px">
+      <ion-col text-center>
+        <div *ngIf="fbData.displayName" style="font-weight:500;color:#37474F;font-weight: 600">{{fbData.displayName}}</div>
+        <div *ngIf="!fbData.displayName" style="font-weight:500;color:#37474F;font-weight: 600">Unknown User</div>
+      </ion-col>
+    </ion-row>
+  </div>
+
+
+</ion-content>
+
+
+<!--<ion-footer>-->
+  <!--<button ion-button full>Full Button</button>-->
+
+<!--</ion-footer>-->
