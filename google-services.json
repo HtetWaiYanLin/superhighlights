@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "56099216619",
+    "firebase_url": "https://super-highlights.firebaseio.com",
+    "project_id": "super-highlights",
+    "storage_bucket": "super-highlights.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56099216619:android:31133d04228478d8",
+        "android_client_info": {
+          "package_name": "com.team24.superhighlights"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56099216619-g0ft5dl3ip80ms505kep642buijktd41.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.team24.superhighlights",
+            "certificate_hash": "fa8187aeb15af759603b71eafa13b2f2c3cec79b"
+          }
+        },
+        {
+          "client_id": "56099216619-ru23c5uj7nlp98uests3hq5fc4114c0b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw5JSXgZzRYYXrw6xk4Pot-9w_cdFdDo4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56099216619-ru23c5uj7nlp98uests3hq5fc4114c0b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

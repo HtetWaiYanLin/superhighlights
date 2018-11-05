@@ -1,3 +1,71 @@
 page-home {
+  //ion-row {
+  //  display: flex;
+  //  justify-content: center;
+  //}
 
+  .scroll-content {
+    padding: 0 !important;
+  }
+  img {
+    display: block;
+  }
+
+
+  .thumbnail {
+    position: relative;
+   // display: inline-block;
+  }
+
+  .caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate( -50%, -50% );
+    text-align: center;
+    color: white;
+    font-weight: bold;
+  }
+  .wrapper {
+    min-height: 250px;
+    //width: 80% !important;
+    //margin: 0 auto;
+    border-radius: 5px !important;
+  }
+  .slideDesign{
+    width: 90% !important;
+  }
+  ion-slides{
+    height: auto !important;
+  }
+  ion-card {
+    position: relative;
+    text-align: left;
+
+  }
+  [ion-fixed]{
+    position: relative;
+  }
+  //
+  //.swiper-pagination-bullet{
+  // // display: none !important;
+  //}
+  //.swiper-pagination-bullet-active {
+  //  background:#546E7A;
+  //  opacity: 1;
+  //}
+
+  .playlist-page{
+    padding: 0px;
+    box-shadow: 0 0 5px #CFD8DC;
+
+  }
+  .playlist-thumb{
+    padding: 0px;
+  }
+  .playlist-page .thumbnail >img{
+    min-height: 70px;
+   // border-radius: 5px;
+
+  }
 }

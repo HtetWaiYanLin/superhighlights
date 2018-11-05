@@ -1,15 +1,48 @@
 <ion-menu [content]="content">
   <ion-header>
-    <ion-toolbar>
-      <ion-title>Menu</ion-title>
+    <ion-toolbar style="padding:0px;">
+      <div class="menu-header">
+        <ion-row>
+          <ion-col col-8 style="padding-left: 16px">
+            <img src="{{fbData.photoURL}}" class="imgApp" (click)="editData()" menuClose onError="this.src = 'assets/imgs/boy.png'">
+          </ion-col>
+        </ion-row>
+        <div class="menu-bottom">
+          <ion-row>
+            <ion-col (click)="editData()" menuClose style="padding-left: 16px">
+              <div *ngIf="fbData.displayName" style="font-weight:500;color:#ffffff">{{fbData.displayName}}</div>
+              <div *ngIf="!fbData.displayName" style="font-weight:500;color:#ffffff">Unknown User</div>
+
+              <div  (click)="facebookLogin()">
+                <p style="color: #ffffff">Login With &nbsp;&nbsp;<ion-icon style="font-size: 1.6em;color:#ffffff" name="logo-facebook"></ion-icon></p>
+
+              </div>
+            </ion-col>
+          </ion-row>
+        </div>
+       <!-- <ion-row>
+          <ion-col (click)="facebookLogin()" style="padding-left: 16px">
+            <p style="color: #37474F">Login With   <ion-icon style="font-size: 1.6em;color:#37474F" name="logo-facebook"></ion-icon></p>
+          </ion-col>
+        </ion-row>-->
+      </div>
+
     </ion-toolbar>
   </ion-header>
 
-  <ion-content>
-    <ion-list>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
-      </button>
+  <ion-content style="background: #CFD8DC">
+    <!--<ion-list>-->
+      <!--<button style="background-color:#CFD8DC;color: #37474F" menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">-->
+        <!--{{p.title}}-->
+      <!--</button>-->
+    <!--</ion-list>-->
+    <ion-list no-lines>
+      <ion-item style="background-color:#CFD8DC;color: #37474F" [ngClass]="k ==2 || k==4 ? 'item-md-menu divider' : 'item-md-menu' " menuClose *ngFor="let p of pages; let k = index"
+                (click)="openPage(p)" [color]="p.color">
+        <ion-icon [name]="p.icon" item-left style="font-size: 1.6em; color: #37474F" ></ion-icon>
+        <span class="menu-text {{font}}">{{p.title}}</span>
+
+      </ion-item>
     </ion-list>
   </ion-content>
 

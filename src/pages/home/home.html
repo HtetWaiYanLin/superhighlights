@@ -1,18 +1,91 @@
-<ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
+<ion-header no-shadow no-border class="thumbnail1">
+
+  <ion-navbar color="super">
+    <button ion-button menuToggle color="light">
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Home</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="md-notifications"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+<ion-content>
+  <!--<ion-list>-->
+  <!--<ion-list-header>-->
+  <!--Videos-->
+  <!--</ion-list-header>-->
+  <!--<ion-item>-->
+  <!--<img src="{{fbData.photoURL}}" />-->
+  <!--<p>{{fbData.displayName}}</p>-->
+  <!--</ion-item>-->
+  <!--<ion-item  *ngFor="let vd of videosD | async" (click)="openPlaylist(vd)">-->
+  <!--<h1>{{vd.title}}</h1>-->
+  <!--<p>{{vd.league}}</p>-->
+  <!--</ion-item>-->
+  <!--</ion-list>-->
+  <div ion-fixed style="padding-top: 10px;" *ngIf="isLoading">
+    <div align="center" ><ion-spinner name="circles" style="color: #37474F;border-radius: 50%;"></ion-spinner></div>
+  </div>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+  <div>
+  <!--<ion-slides  style="vertical-align:top">-->
+  <ion-slides [slidesPerView]="'auto'">
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  <!--*ngIf="videosD" autoplay="1000" loop="true" speed="900" pager="true" spaceBetween="30">-->
+
+    <ion-slide  *ngFor="let vd of videosD | async" (click)="openPlaylist(vd)" class="slideDesign">
+      <ion-card   class="wrapper">
+
+
+        <div class="thumbnail">
+          <img [src]="vd.video_detail.imageurl"  />
+
+          <div class="caption">
+            <img style="width: 60px;height: 60px;" src="assets/imgs/video.png" />
+          </div>
+
+        </div>
+
+        <ion-item no-lines>
+          <h3 style="font-weight:500" text-wrap>{{vd.video_detail.title}}</h3>
+        </ion-item>
+
+      </ion-card>
+
+    </ion-slide>
+  </ion-slides>
+</div>
+
+  <ion-item *ngIf="!isLoading" no-lines>
+    <h2 text-left style="color: #37474F;font-weight: 500">Recent Videos</h2>
+    <p text-right style="color: #546E7A;font-weight: 500" (click)="viewAll()">All Videos</p>
+  </ion-item>
+
+  <div *ngIf="videosD">
+    <ion-card *ngFor="let video of videosD | async"  (click)="openPlaylist(video)" class="playlist-page">
+      <ion-row *ngIf="video.video_detail.url">
+        <ion-col col-4 class="playlist-thumb">
+          <!--<img src="{{ video.url }}" alt="{{ video.title }}">-->
+          <div class="thumbnail">
+            <img  [src]="video.video_detail.imageurl" />
+            <div class="caption">
+              <img style="width: 30px;height: 30px;" src="assets/imgs/video.png" />
+            </div>
+          </div>
+        </ion-col>
+        <ion-col col-8 text-wrap>
+          <div>
+            <h5>{{ video.video_detail.title }}</h5>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+  </div>
+
+
 </ion-content>
