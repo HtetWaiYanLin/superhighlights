@@ -1,19 +1,100 @@
-<ion-content style="background-color: black;" fullscreen>
+<ion-content style="background-color: #f8fafb;" fullscreen>
 
-  <div style="padding-left:15px;padding-right: 15px;padding-top: 5px"  (click)="backPage()">  <ion-icon name="md-arrow-back"  style="color: #fff;font-size: 1.6em"></ion-icon> </div>
-
-  <ion-card-content style="padding: 0px 15px 0px 15px;" >
-    <ion-card-title >
+  <div>
+    <div style="padding-left:15px;padding-right: 15px;padding-top: 5px; position: absolute; z-index: 10;"  (click)="backPage()">
+      <ion-icon name="md-arrow-back"  style="color: #fff;font-size: 1.6em"></ion-icon> </div>
       <div class="video-container">
-        <video (playing)="onPlayingVideo($event)" id="vodo" autoplay="autoplay" controls="controls" [poster]="playvideo.video_detail.imageurl" class="resize_fit_center" controlsList="nodownload"  webkit-playsinline="webkit-playsinline" class="myPlayer" style="width: 100%;">
-          <source src="{{playvideo.video_detail.url}}" type="video/mp4">
+        <!--<iframe [width]="devicewidth" height="204px" src="https://player.vimeo.com/video/298877294"-->
+                <!--frameborder="0" allowFullScreen mozallowfullscreen webkitAllowFullScreen></iframe>-->
+
+        <video (playing)="onPlayingVideo($event)" id="vodo" autoplay="autoplay" controls="controls" [poster]="playvideo.videodata.imageurl" class="resize_fit_center" controlsList="nodownload"  webkit-playsinline="webkit-playsinline" class="myPlayer" style="width: 100%;">
+          <source src="{{playvideo.videodata.url}}" type="video/mp4">
         </video>
       </div>
-    </ion-card-title>
-    <ion-item class="textDesign" no-lines>
-      <h3 class="ptextDesignB" text-wrap>{{playvideo.video_detail.title}}</h3>
-      <p class="ptextDesign" text-wrap>{{playvideo.video_detail.detail}}</p>
-      <p class="ptextDesign" text-wrap>{{playvideo.created.toDate()}}</p>
+
+    <ion-item style="margin-bottom: 10px">
+      <h3  text-wrap>{{playvideo.videodata.title}}</h3>
+      <p style="color:#47565d" text-wrap>{{playvideo.videodata.detail}}</p>
+
+      <!--<p  style="color:#47565d"  text-wrap>{{playvideo.created}}</p>-->
     </ion-item>
-  </ion-card-content>
+  </div>
+
+
+
+  <div>
+
+
+    <ion-list *ngFor="let obj of playvideo.goaldata" no-lines>
+
+      <div text-left *ngIf="obj.team=='H'"  style="padding-left: 12px;margin-bottom: 20px">
+        <ion-row>
+          <ion-col [ngClass]="obj.minute.length>3 ? 'col-2' : 'col-1' " style="margin-top: 4px;font-weight: 600;">{{obj.minute}}</ion-col>
+          <ion-col col-1><ion-icon name="football" style="font-size: 1.6em;"></ion-icon></ion-col>
+          <ion-col>{{obj.goal}} &nbsp;({{obj.result}})<br/><span style="color: #999;font-size: 1.2rem;" *ngIf="obj.assist">assist by {{obj.assist}}</span></ion-col>
+        </ion-row>
+      </div>
+
+      <div text-right *ngIf="obj.team=='A'"  style="padding-right: 16px;margin-bottom: 20px">
+          <ion-row>
+            <ion-col>{{obj.goal}} &nbsp;({{obj.result}})<br/><span style="color: #999;font-size: 1.2rem;" *ngIf="obj.assist">assist by {{obj.assist}}</span></ion-col>
+            <ion-col col-1><ion-icon name="football" style="font-size: 1.6em;"></ion-icon></ion-col>
+            <ion-col col-1 style="margin-top: 4px;font-weight: 600;">{{obj.minute}}</ion-col>
+
+          </ion-row>
+      </div>
+
+    </ion-list>
+   <!-- <ion-list *ngFor="let obj of playvideo.goaldata" no-lines>
+
+      <ion-item *ngIf="obj.team=='H'" text-left>
+        <p>{{obj.minute}}&nbsp;&nbsp;<ion-icon name="football"></ion-icon>&nbsp;&nbsp;{{obj.goal}} &nbsp;({{obj.result}}) </p>
+         <p style="color: #999;font-size: 1.2rem;padding-left: 47px;">assist by {{obj.assist}}</p>
+      </ion-item>
+
+      <ion-item *ngIf="obj.team=='A'" text-right>
+        <p>{{obj.goal}} &nbsp;({{obj.result}})&nbsp;<ion-icon name="football"></ion-icon>&nbsp;&nbsp;{{obj.minute}} </p>
+        <p style="color: #999;font-size: 1.2rem;padding-right: 47px;">assist by {{obj.assist}}</p>
+      </ion-item>
+    </ion-list>-->
+
+  </div>
+
+
+
+
+
+   <!-- <section class="container">
+      <div class="left-half">
+        <article>
+          <ul class="list-ic vertical">
+            <li *ngFor="let obj of playvideo.goaldata">
+              <span>{{obj.minute}}</span>
+              &lt;!&ndash;<ion-icon name="football"></ion-icon>&ndash;&gt;
+              <a>{{obj.goal}} &nbsp;({{obj.result}}) </a>
+              &lt;!&ndash;<p>assist by {{obj.assist}}</p>&ndash;&gt;
+            </li>
+          </ul>
+        </article>
+      </div>
+      <div class="right-half">
+        <article>
+          <ul class="list-ic vertical">
+            <li *ngFor="let obj of playvideo.goaldata">
+              <span>{{obj.minute}}</span>
+              &lt;!&ndash;<ion-icon name="football"></ion-icon>&ndash;&gt;
+              <a>{{obj.goal}} &nbsp;({{obj.result}}) </a>
+              &lt;!&ndash;<p>assist by {{obj.assist}}</p>&ndash;&gt;
+            </li>
+          </ul>
+        </article>
+      </div>
+    </section>
+-->
+
+
+
+
+
+
 </ion-content>

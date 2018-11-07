@@ -16,22 +16,26 @@
 
 <ion-content>
   <div *ngIf="videosD">
-    <ion-card *ngFor="let video of videosD | async"  (click)="openPlaylist(video)" class="playlist-page">
-      <ion-row *ngIf="video.video_detail.url">
+    <ion-card *ngFor="let v of videosD" (click)="openPlaylist(v)" class="playlist-page">
+      <ion-row *ngIf="v.videodata.url">
         <ion-col col-4 class="playlist-thumb">
           <!--<img src="{{ video.url }}" alt="{{ video.title }}">-->
           <div class="thumbnail">
-            <img  [src]="video.video_detail.imageurl" />
+            <img [src]="v.videodata.imageurl"/>
             <div class="caption">
-              <img style="width: 30px;height: 30px;" src="assets/imgs/video.png" />
+              <img style="width: 30px;height: 30px;" src="assets/imgs/video.png"/>
             </div>
           </div>
         </ion-col>
         <ion-col col-8 text-wrap>
           <div>
-            <h5>{{ video.video_detail.title }}</h5>
+            <h5 class="text-with-block">{{ v.videodata.title }}</h5>
+          </div>
+          <div style="position: absolute;top: 68%;color: #999; font-weight: 300;font-size: 1.2rem;">
+            <span>{{v.posttime}}</span>
           </div>
         </ion-col>
+
       </ion-row>
     </ion-card>
   </div>

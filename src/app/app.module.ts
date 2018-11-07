@@ -30,6 +30,8 @@ import {ProfilePage} from "../pages/profile/profile";
 import {FeedbackPage} from "../pages/feedback/feedback";
 import {AboutAppPage} from "../pages/about-app/about-app";
 import {SplashPage} from "../pages/splash/splash";
+import { IonTextAvatar } from 'ionic-text-avatar';
+
 export const credentials = {
   firebase: {
     apiKey: 'AIzaSyB8gMwoN9FbRFMYnYkNor2tNqZZ3tHz6bQ',
@@ -43,6 +45,7 @@ export const credentials = {
 
 @NgModule({
   declarations: [
+    IonTextAvatar,
     MyApp,
     HomePage,
     VideoPage,
