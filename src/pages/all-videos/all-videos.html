@@ -15,24 +15,29 @@
 
 
 <ion-content>
+  <div ion-fixed style="padding-top: 10px;" *ngIf="!videosD">
+    <div align="center">
+      <ion-spinner name="circles" style="color: #37474F;border-radius: 50%;"></ion-spinner>
+    </div>
+  </div>
   <div *ngIf="videosD">
     <ion-card *ngFor="let v of videosD" (click)="openPlaylist(v)" class="playlist-page">
       <ion-row *ngIf="v.videodata.url">
         <ion-col col-4 class="playlist-thumb">
           <!--<img src="{{ video.url }}" alt="{{ video.title }}">-->
           <div class="thumbnail">
-            <img [src]="v.videodata.imageurl"/>
+            <img [src]="v.videodata.imageurl" onError="this.src = 'assets/imgs/err-sh.png'"/>
             <div class="caption">
               <img style="width: 30px;height: 30px;" src="assets/imgs/video.png"/>
             </div>
           </div>
         </ion-col>
-        <ion-col col-8 text-wrap>
-          <div>
-            <h5 class="text-with-block">{{ v.videodata.title }}</h5>
-          </div>
+        <ion-col style="padding-top:0px">
+          <ion-item no-lines   class="itemheader">
+            <h5 style="overflow: hidden;display: -webkit-box !important;white-space: normal !important;-webkit-line-clamp: 2 !important; -webkit-box-orient: vertical !important;">{{ v.videodata.title }}</h5>
+          </ion-item>
           <div style="position: absolute;top: 68%;color: #999; font-weight: 300;font-size: 1.2rem;">
-            <span>{{v.posttime}}</span>
+            <span>{{v.posttime}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <ion-icon ios="ios-eye" md="md-eye"></ion-icon>&nbsp;{{v.viewcount}}&nbsp;Views</span>
           </div>
         </ion-col>
 

@@ -30,22 +30,37 @@ import {ProfilePage} from "../pages/profile/profile";
 import {FeedbackPage} from "../pages/feedback/feedback";
 import {AboutAppPage} from "../pages/about-app/about-app";
 import {SplashPage} from "../pages/splash/splash";
-import { IonTextAvatar } from 'ionic-text-avatar';
+import { NetworkDetectProvider } from '../providers/network-detect/network-detect';
+import {Network} from "@ionic-native/network";
+import { SQLite } from '@ionic-native/sqlite';
+
+import { File } from '@ionic-native/file';
+import { Transfer } from '@ionic-native/transfer';
+import { FilePath } from '@ionic-native/file-path';
+import { Camera } from '@ionic-native/camera';
+import { AngularFireStorage } from '@angular/fire/storage';
+import {HomeTabPage} from "../pages/home-tab/home-tab";
+import { AdMobFree } from '@ionic-native/admob-free';
 
 export const credentials = {
   firebase: {
-    apiKey: 'AIzaSyB8gMwoN9FbRFMYnYkNor2tNqZZ3tHz6bQ',
+    apiKey: 'AIzaSyALV6TllWXnewNvejtqIRVRYOEodBbc7Sk',
+    authDomain: 'super-highlight.firebaseapp.com',
+    databaseURL: 'https://super-highlight.firebaseio.com',
+    projectId: 'super-highlight',
+    storageBucket: 'super-highlight.appspot.com',
+    messagingSenderId: '168956493413'
+   /* apiKey: 'AIzaSyB8gMwoN9FbRFMYnYkNor2tNqZZ3tHz6bQ',
     authDomain: 'super-highlights.firebaseapp.com',
     databaseURL: 'https://super-highlights.firebaseio.com',
     projectId: 'super-highlights',
     storageBucket: 'super-highlights.appspot.com',
-    messagingSenderId: '56099216619'
+    messagingSenderId: '56099216619'*/
   }
 };
 
 @NgModule({
   declarations: [
-    IonTextAvatar,
     MyApp,
     HomePage,
     VideoPage,
@@ -61,7 +76,8 @@ export const credentials = {
     ProfilePage,
     FeedbackPage,
     AboutAppPage,
-    SplashPage
+    SplashPage,
+    HomeTabPage,
 
   ],
   imports: [
@@ -73,7 +89,18 @@ export const credentials = {
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     IonicStorageModule.forRoot(),
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp,{tabsPlacement: 'bottom', tabsHideOnSubPages: true,
+
+      platforms: {
+        android: {
+          tabsPlacement: 'bottom',
+          tabsHideOnSubPages: true,
+        },
+        ios: {
+          tabsPlacement: 'bottom'
+        }
+      }}),
+
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -92,7 +119,8 @@ export const credentials = {
     ProfilePage,
     FeedbackPage,
     AboutAppPage,
-    SplashPage
+    SplashPage,
+    HomeTabPage,
   ],
   providers: [
     StatusBar,
@@ -100,6 +128,15 @@ export const credentials = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
     Facebook,
+    NetworkDetectProvider,
+    Network,
+    SQLite,
+    File,
+    Transfer,
+    Camera,
+    FilePath,
+    AngularFireStorage,
+    AdMobFree
 
   ]
 })

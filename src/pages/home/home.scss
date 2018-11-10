@@ -95,4 +95,24 @@ page-home {
   .text-with-block {
     @include multiLineEllipsis($lineHeight: 1.6em, $lineCount: 2, $bgColor: '');
   }
+  .text-with-block1 {
+    @include multiLineEllipsis($lineHeight: 1.2em, $lineCount: 1, $bgColor: '');
+  }
+  .itemmain{
+    padding-left: 5px;
+  }
+
+.itemmain ion-label{
+  margin-bottom: 0 !important;
+  padding-left: 5px;
+}
+  .itemheader{
+    padding-left: 0px;
+  }
+  .itemheader  ion-label{
+    margin-top: 0 !important;
+  }
+  .itemheader ion-label h5{
+    font-size: 1.2rem;
+  }
 }

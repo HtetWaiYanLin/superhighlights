@@ -5,6 +5,8 @@ import {VideoData} from "../home/home";
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import {VideoPage} from "../video/video";
 import * as firebase from "firebase";
+import {collectExternalReferences} from "@angular/compiler";
+import {Storage} from "@ionic/storage";
 
 
 export interface VideoData {
@@ -30,13 +32,24 @@ export class AllVideosPage {
 
   postTime: any;
   totalday: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public afs: AngularFirestore) {
+  constructor(private storage:Storage,public navCtrl: NavController, public navParams: NavParams,public afs: AngularFirestore) {
     // this.productsCollectionRef = this.afs.collection('video_data');
     // this.videosD = this.productsCollectionRef.valueChanges();
-
-    this.getVideoData().subscribe(data => {
-      this.videosD = data;
+    this.storage.get('alldata').then((val) => {
+      if(val != '' && val != null &&  val != undefined){
+        this.videosD = val;
+        this.getVideoData().subscribe(data => {
+          this.videosD = data;
+          this.storage.set('alldata',this.videosD);
+        });
+      }else{
+        this.getVideoData().subscribe(data => {
+          this.videosD = data;
+          this.storage.set('alldata',this.videosD);
+        });
+      }
     });
+
   }
 
   getVideoData(): Observable<any> {
@@ -47,6 +60,8 @@ export class AllVideosPage {
         querySnapshot.forEach((doc) => {
           const data = doc.data();
           dataarray.push({
+            key:doc.id,
+            send_viewcount:doc.data().view_count,
             videodata : data.video_detail,
             goaldata : data.goal_detail,
             viewcount :this.getViewCount(data.view_count),
@@ -89,10 +104,10 @@ export class AllVideosPage {
   getViewCount(count: number) {
     if (count == 0 || isNaN(count)) {
       return 0;
-    } else if (count < 1000) {
+    } else if (count <= 1000) {
       return count + '';
     } else if (count > 1000 && count < 1000000) {
-      if (count % 1000 === 0) {
+      if ((count % 1000 === 0)  || (count % 1000 <= 99)) {
         return (count / 1000 ).toFixed() + ' K';
       } else {
         return (count / 1000 ).toFixed(1) + ' K';

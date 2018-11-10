@@ -1,3 +1,57 @@
 page-about-app {
 
+  .bg-image {
+
+
+    /* Add the blur effect */
+    /*filter: blur(8px);
+    -webkit-filter: blur(8px);*/
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  /* Position text in the middle of the page/image */
+  .bg-text {
+    font-family: Unicode;
+    color: white;
+    font-size:1.4rem;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 90%;
+    padding: 20px;
+  }
+
+  /* Position text in the middle of the page/image */
+  .bg-text1 {
+    font-family: Unicode;
+    font-size:1.2rem;
+    color: white;
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 90%;
+    padding: 20px;
+    text-align: center;
+  }
+  .bg-text2{
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 50%;
+    padding: 20px;
+  }
 }

@@ -1,4 +1,7 @@
 page-leagues {
+  [ion-fixed]{
+    position: relative;
+  }
   .scroll-content {
     padding: 0 !important;
   }
@@ -26,7 +29,6 @@ page-leagues {
   }
 
   .playlist-page{
-    text-align: left;
     padding: 0px;
     box-shadow: 0 0 5px #CFD8DC;
 
@@ -38,6 +40,33 @@ page-leagues {
     min-height: 70px;
     // border-radius: 5px;
 
+  }
+
+  @mixin multiLineEllipsis($lineHeight: 1.6em, $lineCount: 1, $bgColor: white){
+    overflow: hidden;
+    position: relative;
+    line-height: $lineHeight;
+    max-height: $lineHeight * $lineCount;
+    text-align: justify;
+    &:before {
+      content: '';
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }
+    &:after {
+      content: '';
+      position: absolute;
+      right: 0;
+      width: 1em;
+      height: 1em;
+      margin-top: 1em;
+      background: $bgColor;
+    }
+  }
+
+  .text-with-block {
+    @include multiLineEllipsis($lineHeight: 1.6em, $lineCount: 2, $bgColor: '');
   }
 
 
@@ -98,5 +127,15 @@ page-leagues {
     padding: 7px;
     background-color: #ffffff;
     opacity: 0.5;
+  }
+
+  .itemheader{
+    padding-left: 0px;
+  }
+  .itemheader  ion-label{
+    margin-top: 0 !important;
+  }
+  .itemheader ion-label h5{
+    font-size: 1.2rem;
   }
 }

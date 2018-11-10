@@ -1,26 +1,31 @@
+<!--
+<ion-header no-shadow no-border>
+  <ion-navbar hidden>
+  </ion-navbar>
+</ion-header>
+-->
 <ion-content style="background-color: #f8fafb;" fullscreen>
 
-  <div>
+  <div style="margin-bottom: 13px">
     <div style="padding-left:15px;padding-right: 15px;padding-top: 5px; position: absolute; z-index: 10;"  (click)="backPage()">
       <ion-icon name="md-arrow-back"  style="color: #fff;font-size: 1.6em"></ion-icon> </div>
       <div class="video-container">
         <!--<iframe [width]="devicewidth" height="204px" src="https://player.vimeo.com/video/298877294"-->
                 <!--frameborder="0" allowFullScreen mozallowfullscreen webkitAllowFullScreen></iframe>-->
 
-        <video (playing)="onPlayingVideo($event)" id="vodo" autoplay="autoplay" controls="controls" [poster]="playvideo.videodata.imageurl" class="resize_fit_center" controlsList="nodownload"  webkit-playsinline="webkit-playsinline" class="myPlayer" style="width: 100%;">
+        <!--autoplay="autoplay"-->
+        <video (playing)="onPlayingVideo($event)" id="vodo"  controls="controls" [poster]="playvideo.videodata.imageurl" class="resize_fit_center" controlsList="nodownload"  webkit-playsinline="webkit-playsinline" class="myPlayer" style="width: 100%;">
           <source src="{{playvideo.videodata.url}}" type="video/mp4">
         </video>
       </div>
 
-    <ion-item style="margin-bottom: 10px">
-      <h3  text-wrap>{{playvideo.videodata.title}}</h3>
+    <ion-item no-lines>
+      <h3  style="ont-weight: 500;font-size: 1.5rem;" text-wrap>{{playvideo.videodata.title}}</h3>
       <p style="color:#47565d" text-wrap>{{playvideo.videodata.detail}}</p>
 
       <!--<p  style="color:#47565d"  text-wrap>{{playvideo.created}}</p>-->
     </ion-item>
   </div>
-
-
 
   <div>
 
@@ -29,17 +34,19 @@
 
       <div text-left *ngIf="obj.team=='H'"  style="padding-left: 12px;margin-bottom: 20px">
         <ion-row>
-          <ion-col [ngClass]="obj.minute.length>3 ? 'col-2' : 'col-1' " style="margin-top: 4px;font-weight: 600;">{{obj.minute}}</ion-col>
-          <ion-col col-1><ion-icon name="football" style="font-size: 1.6em;"></ion-icon></ion-col>
+          <ion-col   col-2 style="margin-top: 4px;font-weight: 600;">{{obj.minute}}</ion-col>
+          <ion-col col-2><ion-icon name="ios-football" style="font-size: 1.6em;color:rgba(0, 0, 0, 0.73)"></ion-icon></ion-col>
           <ion-col>{{obj.goal}} &nbsp;({{obj.result}})<br/><span style="color: #999;font-size: 1.2rem;" *ngIf="obj.assist">assist by {{obj.assist}}</span></ion-col>
         </ion-row>
       </div>
 
       <div text-right *ngIf="obj.team=='A'"  style="padding-right: 16px;margin-bottom: 20px">
           <ion-row>
+
             <ion-col>{{obj.goal}} &nbsp;({{obj.result}})<br/><span style="color: #999;font-size: 1.2rem;" *ngIf="obj.assist">assist by {{obj.assist}}</span></ion-col>
-            <ion-col col-1><ion-icon name="football" style="font-size: 1.6em;"></ion-icon></ion-col>
-            <ion-col col-1 style="margin-top: 4px;font-weight: 600;">{{obj.minute}}</ion-col>
+            <ion-col col-2><ion-icon name="ios-football" style="font-size: 1.6em;color:rgba(0, 0, 0, 0.73)"></ion-icon></ion-col>
+            <ion-col col-2 style="margin-top: 4px;font-weight: 600;">{{obj.minute}}</ion-col>
+
 
           </ion-row>
       </div>

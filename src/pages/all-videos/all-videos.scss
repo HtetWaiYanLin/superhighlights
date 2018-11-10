@@ -65,7 +65,19 @@ page-all-videos {
   .text-with-block {
     @include multiLineEllipsis($lineHeight: 1.6em, $lineCount: 2, $bgColor: '');
   }
+  [ion-fixed]{
+    position: relative;
+  }
 
+  .itemheader{
+    padding-left: 0px;
+  }
+  .itemheader  ion-label{
+    margin-top: 0 !important;
+  }
+  .itemheader ion-label h5{
+    font-size: 1.2rem;
+  }
 
  //
  // .video-container {

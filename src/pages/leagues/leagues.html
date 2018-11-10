@@ -4,7 +4,7 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header  *ngIf="pageStatus == 1">
 
   <ion-navbar color="super">
     <ion-title>Leagues</ion-title>
@@ -14,6 +14,7 @@
 
 
 <ion-content padding>
+
   <ion-card class="crdDesign">
     <ion-row>
       <ion-col (click)="champions()">
@@ -73,29 +74,44 @@
 
 
   <ion-item-divider style="background-color: #CFD8DC" >
-    <h2 style="color: #37474F">{{showText}}</h2>
+    <h2 style="color: #37474F;margin-top: 2px">{{showText}}</h2>
   </ion-item-divider>
 
+
+<div>
+    <div ion-fixed align="center" *ngIf="!videosD">
+      <ion-spinner name="circles" style="color: #37474F;border-radius: 50%;"></ion-spinner>
+    </div>
   <div *ngIf="videosD">
-    <ion-card *ngFor="let video of videosD | async"  (click)="openPlaylist(video)" class="playlist-page" >
-      <ion-row *ngIf="video.video_detail.url">
+    <ion-card *ngFor="let v of videosD" (click)="openPlaylist(v)" class="playlist-page">
+      <ion-row *ngIf="v.videodata.url">
         <ion-col col-4 class="playlist-thumb">
           <!--<img src="{{ video.url }}" alt="{{ video.title }}">-->
           <div class="thumbnail">
-            <img [src]="video.video_detail.imageurl" />
+            <img [src]="v.videodata.imageurl"  onError="this.src = 'assets/imgs/err-sh.png'"/>
             <div class="caption">
               <img style="width: 30px;height: 30px;" src="assets/imgs/video.png" />
             </div>
           </div>
         </ion-col>
-        <ion-col col-8 text-wrap>
-          <div>
-            <h4>{{ video.video_detail.title }}</h4>
+        <ion-col col-8 style="padding-top:0px">
+          <ion-item no-lines   class="itemheader">
+            <h5 style="margin-top: 2px;overflow: hidden;display: -webkit-box !important;white-space: normal !important;-webkit-line-clamp: 2 !important; -webkit-box-orient: vertical !important;">{{ v.videodata.title }}</h5>
+          </ion-item>
+          <div style="position: absolute;top: 68%;color: #999; font-weight: 300;font-size: 1.2rem;">
+            <span>{{v.posttime}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <ion-icon ios="ios-eye" md="md-eye"></ion-icon>&nbsp;{{v.viewcount}}&nbsp;Views</span>
           </div>
         </ion-col>
+        <!--<ion-col col-4 text-wrap>-->
+        <!--<div>-->
+        <!--<h3>{{video.videodata.posttime}}</h3>-->
+        <!--</div>-->
+        <!--</ion-col>-->
       </ion-row>
     </ion-card>
   </div>
+
+</div>
 
 
 </ion-content>

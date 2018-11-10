@@ -15,7 +15,38 @@
 
 
 <ion-content padding>
-  <div text-center style="  margin-top: 60%;margin-bottom: 40%;position: relative;">
-    <button ion-button block round color="secondary">Not Available Now!</button>
-  </div>
+  <!--<div text-center style="  margin-top: 60%;margin-bottom: 40%;position: relative;">-->
+    <!--<button ion-button block round color="secondary">Not Available Now!</button>-->
+  <!--</div>-->
+
+  <ion-item>
+    <ion-label stacked>Description</ion-label>
+    <ion-textarea #myInput id="myInput" rows="5" maxLength="3000"  type="text"  [(ngModel)]="descriptionData" ></ion-textarea>
+  </ion-item>
+
+
+  <!-- Icons -->
+  <ion-item no-lines>
+    <button ion-button icon-start (click)="presentActionSheet()" color="secondary" style="margin-bottom: 30px">
+      <ion-icon name="ios-folder-outline"></ion-icon>
+      Upload Your Feedback Photo
+    </button>
+
+    <div style="width: 60%;margin: 0 auto">
+      <img [src]="myPhotosRef"  onError="this.src = 'assets/imgs/shimg.png'"  class="bg-image"/>
+
+      <!--<img src="{{pathForImage(lastImage)}}" style="width: 100%" [hidden]="lastImage === null">-->
+    </div>
+  </ion-item>
+
+
+  <!--<progress [progress]="uploadPercent | async" [color]="'#488aff'">-->
+  <!--</progress>-->
+
 </ion-content>
+<ion-footer>
+  <div (click)="goFeedback()">
+    <button ion-button block  color="secondary">Send</button>
+  </div>
+</ion-footer>
+

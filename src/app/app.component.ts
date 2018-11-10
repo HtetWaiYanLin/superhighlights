@@ -13,6 +13,8 @@ import {Facebook} from "@ionic-native/facebook";
 import {ProfilePage} from "../pages/profile/profile";
 import {FeedbackPage} from "../pages/feedback/feedback";
 import {AboutAppPage} from "../pages/about-app/about-app";
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+import {HomeTabPage} from "../pages/home-tab/home-tab";
 
 @Component({
   templateUrl: 'app.html'
@@ -21,18 +23,18 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   //rootPage: any = HomePage;
-  rootPage: any = HomePage;
+  rootPage: any = HomeTabPage;
   pages: Array<{title: string, component: any,icon:string}>;
 
   fbData:any={};
-
-  constructor(private splashScreen:SplashScreen,private modalCtrl: ModalController,private toastCtrl:ToastController, public facebook: Facebook,private afAuth: AngularFireAuth,private alertCtrl:AlertController,private storage:Storage,public platform: Platform, public statusBar: StatusBar,private  events:Events) {
+  db:any;
+  constructor(private sqlite:SQLite,private splashScreen:SplashScreen,private modalCtrl: ModalController,private toastCtrl:ToastController, public facebook: Facebook,private afAuth: AngularFireAuth,private alertCtrl:AlertController,private storage:Storage,public platform: Platform, public statusBar: StatusBar,private  events:Events) {
     this.initializeApp();
-    this.storage.get('fbdatas').then((val) => {
+    this.storage.get('fbdatas1').then((val) => {
      // console.log('storage app fbdata is', JSON.stringify(val));
       if(val!='' &&  val!=null && val!=undefined){
+       // val.photoURL=val.photoURL+`?width=1024&height=1024`;
         this.fbData=val;
-        this.fbData.photoURL=this.fbData.photoURL+`?width=1024&height=1024`;
       }
       //https://graph.facebook.com/1450577385085712/picture?width=1024&height=1024
 
@@ -40,25 +42,34 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage ,icon:'md-home' },
+      { title: 'Home', component: HomeTabPage ,icon:'md-home' },
       { title: 'Leagues', component: LeaguesPage ,icon:'md-trophy'},
       { title: 'All Videos', component: AllVideosPage,icon:'ios-videocam'},
       { title: 'Feedback', component: FeedbackPage ,icon:'ios-create' },
       { title: 'About App', component: AboutAppPage,icon:'ios-football' }
 
 
-
     ];
 
 
-    // this.events.subscribe('fbdata', (fb) => {
-    //   console.log('fbdata app');
-    //   if(fb!='' &&  fb!=null && fb!=undefined){
-    //     this.fbData=fb;
-    //     this.storage.set(`fbdatas`,this.fbData);
-    //
-    //   }
-    // });
+    this.events.subscribe('fbdata1', (fb) => {
+      console.log('fbdata sub'+fb);
+      if(fb!='' &&  fb!=null && fb!=undefined){
+        this.storage.set(`fbdatas1`,fb);
+        //fb.photoURL=fb.photoURL+`?width=1024&height=1024`;
+        this.fbData=fb;
+      }else{
+        this.storage.get('fbdatas1').then((val) => {
+          // console.log('storage app fbdata is', JSON.stringify(val));
+          if(val!='' &&  val!=null && val!=undefined){
+          //  val.photoURL=val.photoURL+`?width=1024&height=1024`;
+            this.fbData=val;
+          }
+          //https://graph.facebook.com/1450577385085712/picture?width=1024&height=1024
+
+        });
+      }
+    });
   }
   editData(){
     this.nav.push(ProfilePage)
@@ -67,16 +78,32 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      this.statusBar.backgroundColorByHexString('#546E7A');
-      this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.statusBar.backgroundColorByHexString('#546E7A');
+      this.statusBar.backgroundColorByName('#ffffff')
+      this.statusBar.styleDefault();
 
-        // let splash = this.modalCtrl.create(SplashPage);
-        // splash.present();
+      // this.sqlite.create({
+      //   name:"hcmconnect.db",
+      //   location:"default"
+      // }).then((db) =>{
+      //   this.db = db;
+      //   this.getOfflineData();
+      // });
     });
+
+
 
   }
 
+  getOfflineData(){
+    //all_videos
+    this.db.executeSql("CREATE TABLE IF NOT EXISTS all_videos (id INTEGER PRIMARY KEY AUTOINCREMENT,data TEXT)", {}).then((data) => {
+      console.log("all_videos TABLE CREATED");
+    }, (error) => {
+      console.error("Unable to create all_videos table", error);
+    })
+  }
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
@@ -84,7 +111,7 @@ export class MyApp {
       this.nav.setRoot(page.component);
 
     }else{
-      this.nav.push(page.component);
+      this.nav.push(page.component,{pageStatus:1});
     }
   }
   facebookLogin(): Promise<any> {
@@ -97,11 +124,11 @@ export class MyApp {
 
         firebase.auth().signInWithCredential(facebookCredential)
           .then( success => {
-            //  console.log("Firebase success: " + JSON.stringify(success));
-
+             console.log("Firebase fb success: " + JSON.stringify(success));
+            //this.fbData.photoURL1=success.photoURL+'?width=1024&height=1024';
             this.fbData=success;
-            this.storage.set(`fbdatas`,this.fbData);
-            //this.events.publish('fbdata',success);
+            this.storage.set('fbdatas1',this.fbData);
+            this.events.publish('fbdata1', this.fbData);
             this.presentToast();
             //this.navCtrl.push(HomePage,{data:success})
 
