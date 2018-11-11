@@ -14,7 +14,7 @@
                 <!--frameborder="0" allowFullScreen mozallowfullscreen webkitAllowFullScreen></iframe>-->
 
         <!--autoplay="autoplay"-->
-        <video (playing)="onPlayingVideo($event)" id="vodo"  controls="controls" [poster]="playvideo.videodata.imageurl" class="resize_fit_center" controlsList="nodownload"  webkit-playsinline="webkit-playsinline" class="myPlayer" style="width: 100%;">
+        <video #videoPlayer (playing)="onPlayingVideo($event)" id="vodo"  controls="controls" [poster]="playvideo.videodata.imageurl" class="resize_fit_center" controlsList="nodownload"  webkit-playsinline="webkit-playsinline" class="myPlayer" style="width: 100%;">
           <source src="{{playvideo.videodata.url}}" type="video/mp4">
         </video>
       </div>

@@ -41,6 +41,7 @@ import { Camera } from '@ionic-native/camera';
 import { AngularFireStorage } from '@angular/fire/storage';
 import {HomeTabPage} from "../pages/home-tab/home-tab";
 import { AdMobFree } from '@ionic-native/admob-free';
+import { Global } from '../pages/global/global';
 
 export const credentials = {
   firebase: {
@@ -136,7 +137,8 @@ export const credentials = {
     Camera,
     FilePath,
     AngularFireStorage,
-    AdMobFree
+    AdMobFree,
+    Global
 
   ]
 })
