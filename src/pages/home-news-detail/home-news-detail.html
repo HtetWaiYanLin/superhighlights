@@ -1,0 +1,26 @@
+<ion-content style="background-color: #f8fafb;" fullscreen>
+
+  <div style="margin-bottom: 13px">
+
+<!--
+    <div style="right: 50%;left: 50%;top: 2%;position: absolute; z-index: 10;">
+      <ion-spinner name="circles" style="color: #37474F;border-radius: 50%;"></ion-spinner>
+    </div>-->
+
+
+    <div style="padding-left:15px;padding-right: 15px;padding-top: 5px; position: absolute; z-index: 10;"  (click)="backPage()">
+      <ion-icon name="md-arrow-back"  style="color: #fff;font-size: 1.6em"></ion-icon> </div>
+    <div class="video-container">
+      <img [src]="newData.newsdata.imageurl"  onError="this.src = 'assets/imgs/err-sh.png'"/>
+
+    </div>
+
+    <ion-item no-lines>
+      <h3  style="ont-weight: 600;font-size: 1.6rem;margin-bottom: 10px" text-wrap>{{newData.newsdata.title}}</h3>
+      <p style="color:#47565d;line-height: 30px;" text-wrap>{{newData.newsdata.detail}}</p>
+
+    </ion-item>
+  </div>
+
+
+</ion-content>

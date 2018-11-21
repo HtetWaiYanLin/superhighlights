@@ -1,0 +1,120 @@
+page-home-news {
+    //ion-row {
+    //  display: flex;
+    //  justify-content: center;
+    //}
+
+    .scroll-content {
+      padding: 0 !important;
+    }
+    img {
+      display: block;
+    }
+
+
+    .thumbnail {
+      position: relative;
+      // display: inline-block;
+    }
+
+    .caption {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate( -50%, -50% );
+      text-align: center;
+      color: white;
+      font-weight: bold;
+    }
+    .wrapper {
+      min-height: 250px;
+      //width: 80% !important;
+      //margin: 0 auto;
+      border-radius: 5px !important;
+    }
+    .slideDesign{
+      width: 90% !important;
+    }
+    ion-slides{
+      height: auto !important;
+    }
+    ion-card {
+      position: relative;
+      text-align: left;
+
+    }
+    [ion-fixed]{
+      position: relative;
+    }
+    //
+    //.swiper-pagination-bullet{
+    // // display: none !important;
+    //}
+    //.swiper-pagination-bullet-active {
+    //  background:#546E7A;
+    //  opacity: 1;
+    //}
+
+    .playlist-page{
+      padding: 0px;
+      box-shadow: 0 0 5px #CFD8DC;
+
+    }
+    .playlist-thumb{
+      padding: 0px;
+    }
+    .playlist-page .thumbnail >img{
+      min-height: 70px;
+      // border-radius: 5px;
+
+    }
+
+    @mixin multiLineEllipsis($lineHeight: 1.6em, $lineCount: 1, $bgColor: white){
+      overflow: hidden;
+      position: relative;
+      line-height: $lineHeight;
+      max-height: $lineHeight * $lineCount;
+      text-align: justify;
+      &:before {
+        content: '';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+      }
+      &:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        width: 1em;
+        height: 1em;
+        margin-top: 1em;
+        background: $bgColor;
+      }
+    }
+
+    .text-with-block {
+      @include multiLineEllipsis($lineHeight: 1.6em, $lineCount: 2, $bgColor: '');
+    }
+    .text-with-block1 {
+      @include multiLineEllipsis($lineHeight: 1.2em, $lineCount: 1, $bgColor: '');
+    }
+    .itemmain{
+      padding-left: 5px;
+    }
+
+    .itemmain ion-label{
+      margin-bottom: 0 !important;
+      padding-left: 5px;
+    }
+    .itemheader{
+      padding-left: 0px;
+    }
+    .itemheader  ion-label{
+      margin-top: 0 !important;
+    }
+    .itemheader ion-label h5{
+      font-size: 1.2rem;
+    }
+
+
+}

@@ -1,0 +1,28 @@
+<ion-header no-shadow no-border>
+  <ion-navbar color="super">
+    <button ion-button menuToggle color="light">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{title}}</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="md-notifications"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+  <ion-toolbar class="kct" *ngIf="isShow">
+    <p class="microsoft marquee">{{newsdata}}</p>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content no-bounce>
+
+  <ion-tabs #myTabs>
+    <ion-tab [root]="page1" tabIcon="ios-videocam" (ionSelect)="myMethod1()"></ion-tab>
+    <ion-tab [root]="page2" tabIcon="md-paper" (ionSelect)="myMethod2()"></ion-tab>
+    <ion-tab [root]="page3" tabIcon="ios-trophy" (ionSelect)="myMethod3()"></ion-tab>
+  </ion-tabs>
+</ion-content>
+
