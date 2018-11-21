@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import {NavController, NavParams, Platform} from 'ionic-angular';
+import {AdsProvider} from "../../providers/ads/ads";
 
 /**
  * Generated class for the AboutAppPage page.
@@ -17,13 +18,22 @@ export class AboutAppPage {
   p2='App အသုံးပြုသူ Users များ အနေဖြင့် ထည့်သွင်းစေလိုသော အခြားကဏ္ဍများ နှင့် အဆင်မပြေသောအကြောင်းအရာများ ရှိပါက  အကြောင်းကြားစာ ပေးပို့သည့်နေရာတွင် ပေးပို့အကြံပြုနိုင်ပါသည်။';
 
   p3= 'Developed by Team 24 Innovative Solutions';
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private platform:Platform,private adPov:AdsProvider,public navCtrl: NavController, public navParams: NavParams) {
+    this.platform.ready().then(() => {
+      this.adPov.autoshowInterstitialAD();
+      this.adPov.autoShowBannerAD();
+    });
+
+    this.platform.resume.subscribe(() => {
+   //   this.adPov.autoshowInterstitialAD();
+      this.adPov.autoShowBannerAD();
+    });
   }
   backPage(){
     this.navCtrl.pop();
   }
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AboutAppPage');
+  //  console.log('ionViewDidLoad AboutAppPage');
   }
 
 }

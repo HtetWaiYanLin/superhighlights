@@ -7,14 +7,26 @@
 <ion-content style="background-color: #f8fafb;" fullscreen>
 
   <div style="margin-bottom: 13px">
+    <!--<div ion-fixed style="padding-top: 10px;position: absolute; z-index: 10;" *ngIf="!isLoading">
+      <div align="center">
+        <ion-spinner name="circles" style="color: #37474F;border-radius: 50%;"></ion-spinner>
+      </div>
+    </div>-->
+
+
+    <div style="right: 50%;left: 50%;top: 2%;position: absolute; z-index: 10;" *ngIf="isLoading">
+        <ion-spinner name="circles" style="color: #37474F;border-radius: 50%;"></ion-spinner>
+    </div>
+
+
     <div style="padding-left:15px;padding-right: 15px;padding-top: 5px; position: absolute; z-index: 10;"  (click)="backPage()">
       <ion-icon name="md-arrow-back"  style="color: #fff;font-size: 1.6em"></ion-icon> </div>
       <div class="video-container">
-        <!--<iframe [width]="devicewidth" height="204px" src="https://player.vimeo.com/video/298877294"-->
-                <!--frameborder="0" allowFullScreen mozallowfullscreen webkitAllowFullScreen></iframe>-->
+      <!--  <iframe #videoplayer (playing)="onPlayingVideo($event)" [width]="devicewidth" height="204px" [src]="sanitizer.bypassSecurityTrustResourceUrl(playvideo.videodata.iframeurl)" (pause)="pauseEvent($event)"
+                frameborder="0" allowFullScreen mozallowfullscreen webkitAllowFullScreen></iframe>-->
 
         <!--autoplay="autoplay"-->
-        <video #videoPlayer (playing)="onPlayingVideo($event)" id="vodo"  controls="controls" [poster]="playvideo.videodata.imageurl" class="resize_fit_center" controlsList="nodownload"  webkit-playsinline="webkit-playsinline" class="myPlayer" style="width: 100%;">
+        <video #videoPlayer (playing)="onPlayingVideo($event)" id="vodo"  (pause)="pauseEvent($event)"  (ended)="endVideo($event)" controls="controls" [poster]="playvideo.videodata.imageurl" class="resize_fit_center" controlsList="nodownload"  webkit-playsinline="webkit-playsinline" class="myPlayer" style="width: 100%;">
           <source src="{{playvideo.videodata.url}}" type="video/mp4">
         </video>
       </div>

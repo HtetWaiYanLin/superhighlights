@@ -22,8 +22,7 @@ import {HomeTabPage} from "../pages/home-tab/home-tab";
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  //rootPage: any = HomePage;
-  rootPage: any = HomeTabPage;
+  rootPage = HomeTabPage;
   pages: Array<{title: string, component: any,icon:string}>;
 
   fbData:any={};
@@ -31,19 +30,17 @@ export class MyApp {
   constructor(private sqlite:SQLite,private splashScreen:SplashScreen,private modalCtrl: ModalController,private toastCtrl:ToastController, public facebook: Facebook,private afAuth: AngularFireAuth,private alertCtrl:AlertController,private storage:Storage,public platform: Platform, public statusBar: StatusBar,private  events:Events) {
     this.initializeApp();
     this.storage.get('fbdatas1').then((val) => {
-     // console.log('storage app fbdata is', JSON.stringify(val));
       if(val!='' &&  val!=null && val!=undefined){
-       // val.photoURL=val.photoURL+`?width=1024&height=1024`;
         this.fbData=val;
       }
-      //https://graph.facebook.com/1450577385085712/picture?width=1024&height=1024
 
     });
 
-    // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomeTabPage ,icon:'md-home' },
+/*
       { title: 'Leagues', component: LeaguesPage ,icon:'md-trophy'},
+*/
       { title: 'All Videos', component: AllVideosPage,icon:'ios-videocam'},
       { title: 'Feedback', component: FeedbackPage ,icon:'ios-create' },
       { title: 'About App', component: AboutAppPage,icon:'ios-football' }
@@ -53,20 +50,14 @@ export class MyApp {
 
 
     this.events.subscribe('fbdata1', (fb) => {
-      console.log('fbdata sub'+fb);
       if(fb!='' &&  fb!=null && fb!=undefined){
         this.storage.set(`fbdatas1`,fb);
-        //fb.photoURL=fb.photoURL+`?width=1024&height=1024`;
         this.fbData=fb;
       }else{
         this.storage.get('fbdatas1').then((val) => {
-          // console.log('storage app fbdata is', JSON.stringify(val));
           if(val!='' &&  val!=null && val!=undefined){
-          //  val.photoURL=val.photoURL+`?width=1024&height=1024`;
             this.fbData=val;
           }
-          //https://graph.facebook.com/1450577385085712/picture?width=1024&height=1024
-
         });
       }
     });
@@ -76,12 +67,12 @@ export class MyApp {
   }
   initializeApp() {
     this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      this.splashScreen.hide();
+      this.statusBar.overlaysWebView(false);
       this.statusBar.backgroundColorByHexString('#546E7A');
       this.statusBar.backgroundColorByName('#ffffff')
       this.statusBar.styleDefault();
+      this.splashScreen.hide();
+
 
       // this.sqlite.create({
       //   name:"hcmconnect.db",
@@ -96,17 +87,8 @@ export class MyApp {
 
   }
 
-  getOfflineData(){
-    //all_videos
-    this.db.executeSql("CREATE TABLE IF NOT EXISTS all_videos (id INTEGER PRIMARY KEY AUTOINCREMENT,data TEXT)", {}).then((data) => {
-      console.log("all_videos TABLE CREATED");
-    }, (error) => {
-      console.error("Unable to create all_videos table", error);
-    })
-  }
+
   openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
     if(page.title=='Home'){
       this.nav.setRoot(page.component);
 
@@ -124,13 +106,10 @@ export class MyApp {
 
         firebase.auth().signInWithCredential(facebookCredential)
           .then( success => {
-             console.log("Firebase fb success: " + JSON.stringify(success));
-            //this.fbData.photoURL1=success.photoURL+'?width=1024&height=1024';
             this.fbData=success;
             this.storage.set('fbdatas1',this.fbData);
             this.events.publish('fbdata1', this.fbData);
             this.presentToast();
-            //this.navCtrl.push(HomePage,{data:success})
 
           });
 
@@ -144,7 +123,7 @@ export class MyApp {
     });
 
     toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
+     // console.log('Dismissed toast');
     });
 
     toast.present();

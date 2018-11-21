@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import {App, NavController, NavParams} from 'ionic-angular';
+import {App, NavController, NavParams, Platform} from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Storage } from '@ionic/storage';
 import {VideoPage} from "../video/video";
 import * as firebase from "firebase";
+import {AdsProvider} from "../../providers/ads/ads";
 
 
 export interface VideoData {
@@ -36,9 +37,32 @@ export class LeaguesPage {
   totalday: any;
   pageStatus:number;
   rootNavCtrl: NavController;
-  textData=['Champions','Europa','Premier','La Liga','Ligue 1','Serie A'];
-  constructor(private app:App,public storage:Storage,public afs: AngularFirestore,public navCtrl: NavController, public navParams: NavParams) {
+//  textData=['Champions','Europa','Premier','La Liga','Ligue 1','Serie A'];
 
+  /*
+  ချန်ပီယံလိခ်
+ယူရိုပါလိခ်
+ပရီးမီးယားလိခ်
+လာလီဂါ
+လီဂူး
+စီးရီးအေ
+*/
+  textData=['ချန်ပီယံလိခ်','ယူရိုပါလိခ်','ပရီးမီးယားလိခ်','လာလီဂါ','လီဂူး','စီးရီးအေ'];
+  constructor(private platform:Platform,private adPov:AdsProvider,private app:App,public storage:Storage,public afs: AngularFirestore,public navCtrl: NavController, public navParams: NavParams) {
+    this.platform.ready().then(() => {
+     // this.adPov.autoshowInterstitialAD();
+     // this.adPov.autoShowBannerAD();
+      this.adPov.hideBannerAD();
+
+    });
+
+
+    this.platform.resume.subscribe(() => {
+      //this.adPov.autoshowInterstitialAD();
+     // this.adPov.autoShowBannerAD();
+      this.adPov.hideBannerAD();
+
+    });
     this.pageStatus = this.navParams.get('pageStatus');
     this.rootNavCtrl = navParams.get('rootNavCtrl');
 
@@ -256,7 +280,7 @@ export class LeaguesPage {
 
   }
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LeaguesPage');
+   // console.log('ionViewDidLoad LeaguesPage');
   }
 
 }

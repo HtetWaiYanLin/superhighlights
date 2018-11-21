@@ -1,12 +1,13 @@
 import {Component, ViewChild} from '@angular/core';
-import {Content, NavController, NavParams} from 'ionic-angular';
+import {Content, NavController, NavParams, Platform} from 'ionic-angular';
 import {Observable} from "rxjs";
-import {VideoData} from "../home/home";
+//import {VideoData} from "../home/home";
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import {VideoPage} from "../video/video";
 import * as firebase from "firebase";
 import {collectExternalReferences} from "@angular/compiler";
 import {Storage} from "@ionic/storage";
+import {AdsProvider} from "../../providers/ads/ads";
 
 
 export interface VideoData {
@@ -32,9 +33,17 @@ export class AllVideosPage {
 
   postTime: any;
   totalday: any;
-  constructor(private storage:Storage,public navCtrl: NavController, public navParams: NavParams,public afs: AngularFirestore) {
-    // this.productsCollectionRef = this.afs.collection('video_data');
-    // this.videosD = this.productsCollectionRef.valueChanges();
+  constructor(private platform:Platform,private adPov:AdsProvider,private storage:Storage,public navCtrl: NavController, public navParams: NavParams,public afs: AngularFirestore) {
+    this.platform.ready().then(() => {
+      this.adPov.autoshowInterstitialAD();
+      this.adPov.autoShowBannerAD();
+    });
+
+    this.platform.resume.subscribe(() => {
+     // this.adPov.autoshowInterstitialAD();
+      this.adPov.autoShowBannerAD();
+    });
+
     this.storage.get('alldata').then((val) => {
       if(val != '' && val != null &&  val != undefined){
         this.videosD = val;
@@ -122,7 +131,7 @@ export class AllVideosPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AllVideosPage');
+   // console.log('ionViewDidLoad AllVideosPage');
   }
 
   openPlaylist(ydata) {
@@ -132,19 +141,4 @@ export class AllVideosPage {
 
   }
 
-  // onPlayingVideo(event,index) {
-  //   console.log("index="+index)
-  //   event.preventDefault();
-  //   if (this.currentPlayingVideo === undefined) {
-  //     console.log("L");
-  //     this.currentPlayingVideo = event.target;
-  //     this.currentPlayingVideo.play();
-  //   } else {
-  //     console.log("A");
-  //     if (event.target !== this.currentPlayingVideo) {
-  //       this.currentPlayingVideo.pause();
-  //       this.currentPlayingVideo = event.target;
-  //     }
-  //   }
-  // }
 }

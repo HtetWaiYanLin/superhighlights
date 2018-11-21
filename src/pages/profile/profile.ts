@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import {
   NavController,
   Events,
-   NavParams
+  NavParams, Platform
 } from 'ionic-angular';
 
 
 import {Storage} from '@ionic/storage'
+import {AdsProvider} from "../../providers/ads/ads";
 
 
 /**
@@ -24,9 +25,19 @@ export class ProfilePage {
   fbData:any={};
 
 
-   constructor(private events:Events,public storage:Storage,public navCtrl: NavController, public navParams: NavParams) {
-    this.events.subscribe('fbdata1', (fb) => {
-      console.log('fbdata profile');
+   constructor(private platform:Platform,private adPov:AdsProvider,private events:Events,public storage:Storage,public navCtrl: NavController, public navParams: NavParams) {
+
+     this.platform.ready().then(() => {
+       this.adPov.autoshowInterstitialAD();
+       this.adPov.autoShowBannerAD();
+     });
+
+     this.platform.resume.subscribe(() => {
+       //this.adPov.autoshowInterstitialAD();
+       this.adPov.autoShowBannerAD();
+     });
+     this.events.subscribe('fbdata1', (fb) => {
+    //  console.log('fbdata profile');
       if(fb!='' &&  fb!=null && fb!=undefined){
         this.storage.set('fbdatas1',fb);
        // fb.photoURL=fb.photoURL+`?width=1024&height=1024`;
@@ -58,7 +69,7 @@ export class ProfilePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ProfilePage');
+   // console.log('ionViewDidLoad ProfilePage');
   }
 
 }

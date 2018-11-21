@@ -19,6 +19,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { AngularFireStorage } from '@angular/fire/storage';
 import {BehaviorSubject, Observable} from "rxjs";
 import {Facebook} from "@ionic-native/facebook";
+import {AdsProvider} from "../../providers/ads/ads";
 declare var cordova: any;
 declare var window: any;
 
@@ -60,7 +61,16 @@ export class FeedbackPage {
 
   flagsend:boolean=false;
 
-  constructor(private locstorage:Storage,public facebook: Facebook,private  afs:AngularFirestore,private  storage:AngularFireStorage,private events:Events,public navCtrl: NavController, private camera: Camera, private transfer: Transfer, private file: File, private filePath: FilePath, public actionSheetCtrl: ActionSheetController, public toastCtrl: ToastController, public platform: Platform, public loadingCtrl: LoadingController) {
+  constructor(private adPov:AdsProvider,private locstorage:Storage,public facebook: Facebook,private  afs:AngularFirestore,private  storage:AngularFireStorage,private events:Events,public navCtrl: NavController, private camera: Camera, private transfer: Transfer, private file: File, private filePath: FilePath, public actionSheetCtrl: ActionSheetController, public toastCtrl: ToastController, public platform: Platform, public loadingCtrl: LoadingController) {
+    this.platform.ready().then(() => {
+      this.adPov.autoshowInterstitialAD();
+      this.adPov.autoShowBannerAD();
+    });
+
+    this.platform.resume.subscribe(() => {
+     // this.adPov.autoshowInterstitialAD();
+      this.adPov.autoShowBannerAD();
+    });
 
     this.feedbackCollection = this.afs.collection<FeedbackData>('feedback_data');
     this.feedbackData = this.feedbackCollection.valueChanges();
@@ -88,7 +98,7 @@ export class FeedbackPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad FeedbackPage');
+   // console.log('ionViewDidLoad FeedbackPage');
   }
   presentActionSheet() {
     let actionSheet = this.actionSheetCtrl.create({
@@ -127,30 +137,12 @@ export class FeedbackPage {
 
 
     this.camera.getPicture(options).then((imagePath) => {
-      //alert('got image path ' + imagePath);
       this.myPhotosRef=imagePath;
       return this.makeFileIntoBlob(imagePath);//convert picture to blob
     }).then((imageBlob) => {
-     // alert('got image blob ' + imageBlob);
       this.myPhoto=imageBlob;
-     // return this.uploadToFirebase(imageBlob);//upload the blob
     });
 
-
-   /* this.camera.getPicture(options).then((imagePath) => {
-      alert('got image path ' + imagePath);
-      return this.makeFileIntoBlob(imagePath);//convert picture to blob
-    }).then((imageBlob) => {
-      alert('got image blob ' + imageBlob);
-      return this.uploadToFirebase(imageBlob);//upload the blob
-    }).then((uploadSnapshot: any) => {
-      alert('file uploaded successfully  ' + uploadSnapshot.downloadURL);
-      //return this.saveToDatabase(uploadSnapshot);//store reference to storage in database
-    }).then((_uploadSnapshot: any) => {
-      alert('file saved to asset catalog successfully  ');
-    }, (_error) => {
-      alert('Error ' + (_error.message || _error));
-    });*/
 
 
   }
@@ -170,7 +162,7 @@ export class FeedbackPage {
           };
 
           reader.onerror = (e) => {
-            console.log('Failed file read: ' + e.toString());
+           // console.log('Failed file read: ' + e.toString());
             reject(e);
           };
 
@@ -183,7 +175,7 @@ export class FeedbackPage {
   //Upload picture to the firebase storage
   uploadToFirebase(imgBlob: any) {
     var randomNumber = Math.floor(Math.random() * 256);
-    console.log('Random number : ' + randomNumber);
+    //console.log('Random number : ' + randomNumber);
     return new Promise((resolve, reject) => {
       let storageRef = firebase.storage().ref(this.basePath + randomNumber + '.jpg');//Firebase storage main path
 
@@ -208,8 +200,8 @@ export class FeedbackPage {
           this.myPhotosRef=val;
           this._obj.imageurl = val;
           this._obj.detail=this.descriptionData;
-          console.log('Saved picture url', val);
-          console.log('Success Photo!');
+          //console.log('Saved picture url', val);
+          //console.log('Success Photo!');
           this.addFeedback(this._obj);
           resolve(val);
 
@@ -217,54 +209,19 @@ export class FeedbackPage {
       );
     });
 
-      /*uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
-        (snapshot) => {
-          // upload in progress
-
-          console.log('success');
-
-        },
-        (error) => {
-          // upload failed
-          console.log(error);
-          reject(error);
-        },
-        () => {
-          // upload success
-          let url = uploadTask.snapshot.downloadURL;
-          this.myPhotosRef=url;
-          this._obj.imageurl = url;
-          console.log('Saved picture url', url);
-          resolve(uploadTask.snapshot);
-          this.presentToastFB('Success Photo!');
-          task.snapshotChanges().pipe(
-            finalize(() => this.downloadURL = fileRef.getDownloadURL() )
-          )
-        });
-    });*/
   }
 
-
-
- // private uploadFile(): void {
   uploadFile(){
 
     if(this.myPhotosRef == '' || this.myPhotosRef == undefined || this.myPhotosRef == null || this.myPhotosRef.trim().length == 0 ) {
-          console.log('NO Photo!');
+          //console.log('NO Photo!');
       this._obj.detail=this.descriptionData;
       this.addFeedback(this._obj);
-     // this.presentToastFB('Thanks you for your feedback')
     }else{
-      console.log('upload photo');
+      //console.log('upload photo');
 
       return this.uploadToFirebase(this.myPhoto);
-      //.then( response => {
-      //
-      //   console.log('upload photo respone=>'+JSON.stringify(response))
-      //
-      //   }).catch(error=>{
-      //     console.log('upload photo error');
-      // });
+
 
     }
   }
@@ -287,9 +244,7 @@ export class FeedbackPage {
           this.facebookLogin();
         }else{
           this.uploadFile();
-          // this._obj.detail=this.descriptionData;
-          // this.addFeedback(this._obj);
-          // this.presentToastFB('Thanks you for your feedback')
+
         }
       }
     }
@@ -318,7 +273,7 @@ export class FeedbackPage {
 
         firebase.auth().signInWithCredential(facebookCredential)
           .then( success => {
-            console.log("Firebase fb success: " + JSON.stringify(success));
+            //console.log("Firebase fb success: " + JSON.stringify(success));
 
             this.fbData=success;
             this.locstorage.set(`fbdatas1`,this.fbData);
@@ -329,9 +284,7 @@ export class FeedbackPage {
             this._obj.email=this.fbData.email;
             this._obj.detail=this.descriptionData;
             this.uploadFile();
-            /*this.addFeedback(this._obj);
-            this.presentToastFB('Welcome Super Highlights and Thanks you for your feedback.');*/
-            //this.navCtrl.push(HomePage,{data:success})
+
 
           });
 
@@ -347,7 +300,7 @@ export class FeedbackPage {
     });
 
     toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
+      //console.log('Dismissed toast');
     });
 
     toast.present();

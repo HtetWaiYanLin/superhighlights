@@ -1,4 +1,4 @@
-import {Component, ViewChild,} from '@angular/core';
+import {Component, ElementRef, ViewChild,} from '@angular/core';
 import {App, Content, NavController, NavParams, ToastController, ViewController} from 'ionic-angular';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Platform} from 'ionic-angular';
@@ -6,10 +6,14 @@ import * as firebase from "firebase";
 import {NetworkDetectProvider} from "../../providers/network-detect/network-detect";
 
 import { AdMobFree, AdMobFreeBannerConfig, AdMobFreeInterstitialConfig, AdMobFreeRewardVideoConfig } from '@ionic-native/admob-free';
+import {Global} from "../global/global";
+import {e} from "@angular/core/src/render3";
+import {AdsProvider} from "../../providers/ads/ads";
 
 @Component({
   selector: 'page-video',
   templateUrl: 'video.html',
+  providers:[Global]
 
 })
 export class VideoPage {
@@ -20,40 +24,37 @@ export class VideoPage {
   @ViewChild(Content) contentdata: Content;
   currentPlayingVideo: HTMLVideoElement;
   @ViewChild('videoPlayer') videoplayer: any;
+//@ViewChild('videoPlayer') videoplayer: ElementRef;
 
-  constructor(private app:App,private admob:AdMobFree,private toastCtrl:ToastController,private network:NetworkDetectProvider,private navCtrl: NavController, public navParams: NavParams, public sanitizer: DomSanitizer,private platform: Platform) {
+  isLoading:boolean;
 
-    if(network.checkNetwork()!=''){
-      this.playvideo = this.navParams.get('data');
-      this.playvideo.imageurl='assets/imgs/err-sh.png';
-      this.presentToast(network.checkNetwork());
+  constructor(private adPov:AdsProvider,private global:Global,private app:App,private admob:AdMobFree,private toastCtrl:ToastController,private network:NetworkDetectProvider,private navCtrl: NavController, public navParams: NavParams, public sanitizer: DomSanitizer,private platform: Platform) {
+      this.isLoading=true;
+    this.platform.ready().then(() => {
+      if(network.checkNetwork()!=''){
+        this.playvideo = this.navParams.get('data');
+        this.playvideo.imageurl='assets/imgs/err-sh.png';
+        this.presentToast(network.checkNetwork());
 
-    }else{
-      this.playvideo = this.navParams.get('data');
-    }
- //  console.log("JSON playvideo"+JSON.stringify(this.playvideo));
+      }else{
+        this.playvideo = this.navParams.get('data');
+      }
 
-    this.platform.ready().then((readySource) => {
       this.devicewidth = platform.width();
-     this.prepareADs();
+      this.adPov.prepareInterstitialAD();
+      this.adPov.autoShowBannerAD();
+
     });
 
     this.platform.resume.subscribe(() => {
-      this.prepareADs();
+     // this.adPov.autoshowInterstitialAD();
+      this.adPov.autoShowBannerAD();
     });
-
-
-  /*  this.platform.registerBackButtonAction(() => {
-      console.log("backPressed 1");
-      this.shwoADS();
-      navCtrl.pop(); // IF IT'S NOT THE ROOT, POP A PAGE.
-    },5);*/
-
+    this.isLoading=false;
 
     setTimeout(()=>{
-
-      this.showData();
-    }, 10000); //10sec
+      this.adPov.showInterstitialAD();
+      }, 100000); //10min
 
 
   }
@@ -71,80 +72,64 @@ export class VideoPage {
     });
 
     toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
+     // console.log('Dismissed toast');
     });
 
     toast.present();
   }
   backPage() {
-
+    //this.toggleVideo();
+    //this.adPov.autoshowInterstitialAD();
     this.navCtrl.pop();
-
   }
-showData(){
-    this.toggleVideo();
-  this.admob.interstitial.show();
-
-}
-
-
-  prepareADs(){
-    let interstitialConfig: AdMobFreeInterstitialConfig = {
-      isTesting: false, // Remove in production
-      autoShow: false,
-      id: 'ca-app-pub-9860353158665861/5792083316'
-    };
-    this.admob.interstitial.config(interstitialConfig);
-
-    this.admob.interstitial.prepare()
-      .then(() => {
-        //this.admob.interstitial.show()
-      })
-      .catch(e => console.log(e));
-  }
-
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad VideoPage');
-
+  //  console.log('ionViewDidLoad VideoPage');
 
   }
 
 
-  // onPlayingVideo(ev: any) {
-  //   console.log("ev vid=");
-  //
-  //}
+  endVideo(eve){
+   // console.log("end=="+JSON.stringify(eve));
+   // this.toggleVideo();
+   // this.adPov.autoshowInterstitialAD();
 
+
+  }
+  pauseEvent(ev){
+    //  console.log("pause=="+JSON.stringify(ev));
+    this.toggleVideo();
+    this.adPov.autoshowInterstitialAD();
+  }
   onPlayingVideo(event) {
-   // console.log("index="+JSON.stringify(event))
+  // console.log("play=="+JSON.stringify(event));
     event.preventDefault();
     if (this.currentPlayingVideo === undefined) {
-      console.log("play");
+     // console.log("play");
       this.updateViewwCount(this.playvideo.key);
 
     } else {
-      console.log("pause");
+     // console.log("pause");
       if (event.target !== this.currentPlayingVideo) {
-        console.log("ha ha");
+       // console.log("ha ha");
 
       }
     }
   }
   updateViewwCount(key: string) {
     if (this.network.checkNetwork() == '') {
-     // console.log('key==' + key);
-     // console.log('video viewcount==' + this.playvideo.send_viewcount);
 
       const db = firebase.firestore();
       const data = db.collection('video_data').doc(key);
-      // To update age and favorite color:
       data.update({
         'view_count': Number(this.playvideo.send_viewcount + 1),
       }).then(function () {
-       // console.log('Document successfully updated!');
       });
     }
 
   }
+
+
+
+
 }

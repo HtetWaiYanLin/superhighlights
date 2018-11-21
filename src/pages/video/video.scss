@@ -1,5 +1,7 @@
 page-video {
-
+  [ion-fixed]{
+    position: relative;
+  }
   .video-container {
     position: relative;
     padding-top: 0px; height: 0; overflow: hidden;

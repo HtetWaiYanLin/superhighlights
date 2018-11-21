@@ -1,33 +1,4 @@
-<!--<ion-header no-shadow no-border class="thumbnail1">
-
-  <ion-navbar color="super">
-    <button ion-button menuToggle color="light">
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Home</ion-title>
-
-    <ion-buttons end>
-      <button ion-button icon-only>
-        <ion-icon name="md-notifications"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
-</ion-header>-->
-
 <ion-content>
-  <!--<ion-list>-->
-  <!--<ion-list-header>-->
-  <!--Videos-->
-  <!--</ion-list-header>-->
-  <!--<ion-item>-->
-  <!--<img src="{{fbData.photoURL}}" />-->
-  <!--<p>{{fbData.displayName}}</p>-->
-  <!--</ion-item>-->
-  <!--<ion-item  *ngFor="let vd of videosD | async" (click)="openPlaylist(vd)">-->
-  <!--<h1>{{vd.title}}</h1>-->
-  <!--<p>{{vd.league}}</p>-->
-  <!--</ion-item>-->
-  <!--</ion-list>-->
   <div ion-fixed style="padding-top: 10px;" *ngIf="isLoading">
     <div align="center">
       <ion-spinner name="circles" style="color: #37474F;border-radius: 50%;"></ion-spinner>
@@ -44,33 +15,36 @@
   </ion-refresher>
 
   <div *ngIf="!isLoading">
-    <ion-slides [slidesPerView]="'auto'">
+    <ion-slides #slides1 [slidesPerView]="'auto'" *ngIf="videoData.length>0">
       <ion-slide *ngFor="let vd of videoData" (click)="openPlaylist(vd)" class="slideDesign">
         <ion-card class="wrapper">
           <div class="thumbnail">
-            <img [src]="vd.videodata.imageurl"  onError="this.src = 'assets/imgs/err-sh.png'"/>
+            <img [src]="vd.videodata.imageurl" onError="this.src = 'assets/imgs/err-sh.png'"/>
             <div class="caption">
               <img style="width: 60px;height: 60px;" src="assets/imgs/video.png"/>
             </div>
           </div>
 
           <ion-item no-lines class="itemmain">
-            <h3  style="overflow: hidden;display: -webkit-box !important;white-space: normal !important;-webkit-line-clamp: 1 !important; -webkit-box-orient: vertical !important;font-weight: 500" >{{vd.videodata.title}}</h3>
-<!--
-            <p style="font-weight:300;font-size: 1.3rem" class="text-with-block1" >{{vd.videodata.detail}}</p>
--->
+            <h3
+              style="overflow: hidden;display: -webkit-box !important;white-space: normal !important;-webkit-line-clamp: 1 !important; -webkit-box-orient: vertical !important;font-weight: 500">
+              {{vd.videodata.title}}</h3>
+            <!--
+                        <p style="font-weight:300;font-size: 1.3rem" class="text-with-block1" >{{vd.videodata.detail}}</p>
+            -->
           </ion-item>
 
           <ion-item no-lines style="padding-left: 5px">
             <ion-row style="color: #999; font-weight: 300;font-size: 1.2rem;">
-              <ion-col  text-wrap>
-                <span  text-wrap>{{vd.posttime}}</span>
+              <ion-col>
+                <span>{{vd.posttime}}</span>
               </ion-col>
-              <ion-col col-5 text-wrap>
-                <span  text-wrap style="color: orange">{{vd.videodata.league}}</span>
+              <ion-col text-center>
+                <span style="color: orange">{{vd.videodata.league}}</span>
               </ion-col>
-              <ion-col col-4 text-wrap>
-                <ion-icon ios="ios-eye" md="md-eye"></ion-icon><span>&nbsp;{{vd.viewcount}}</span>&nbsp;Views
+              <ion-col text-right style="margin-right: -5px;">
+                <ion-icon ios="ios-eye" md="md-eye"></ion-icon>
+                <span>&nbsp;{{vd.viewcount}}</span>&nbsp;Views
               </ion-col>
             </ion-row>
 
@@ -83,33 +57,36 @@
 
   <ion-item *ngIf="!isLoading" no-lines>
     <!--<h2 text-left style="color: #37474F;font-weight: 500">Recent Videos</h2>-->
-    <p  style="color: #546E7A;font-weight: 500" (click)="viewAll()">Recent Videos</p>
+    <p style="color: #546E7A;font-weight: 500" (click)="viewAll()">Recent Videos</p>
   </ion-item>
 
-  <div *ngIf="listVideoData">
+  <div *ngIf="listVideoData.length>0">
     <ion-card *ngFor="let v of listVideoData" (click)="openPlaylist(v)" class="playlist-page">
       <ion-row *ngIf="v.videodata.url">
         <ion-col col-4 class="playlist-thumb">
           <!--<img src="{{ video.url }}" alt="{{ video.title }}">-->
           <div class="thumbnail">
-            <img [src]="v.videodata.imageurl"  onError="this.src = 'assets/imgs/err-sh.png'"/>
+            <img [src]="v.videodata.imageurl" onError="this.src = 'assets/imgs/ball.png'"/>
             <div class="caption">
-              <img style="width: 30px;height: 30px;" src="assets/imgs/video.png" />
+              <img style="width: 30px;height: 30px;" src="assets/imgs/video.png"/>
             </div>
           </div>
         </ion-col>
         <ion-col col-8 style="padding-top:0px">
-          <ion-item no-lines  class="itemheader">
-            <h5  style="overflow: hidden;display: -webkit-box !important;white-space: normal !important;-webkit-line-clamp: 2 !important; -webkit-box-orient: vertical !important;" >{{ v.videodata.title }}</h5>
+          <ion-item no-lines class="itemheader">
+            <h5
+              style="overflow: hidden;display: -webkit-box !important;white-space: normal !important;-webkit-line-clamp: 2 !important; -webkit-box-orient: vertical !important;">
+              {{ v.videodata.title }}</h5>
           </ion-item>
           <div style="position: absolute;top: 68%;color: #999; font-weight: 300;font-size: 1.2rem;">
-            <span>{{v.posttime}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <ion-icon ios="ios-eye" md="md-eye"></ion-icon>&nbsp;{{v.viewcount}}&nbsp;Views</span>
+            <span>{{v.posttime}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <ion-icon ios="ios-eye"
+                                                                                                       md="md-eye"></ion-icon>&nbsp;{{v.viewcount}}&nbsp;Views</span>
           </div>
         </ion-col>
         <!--<ion-col col-4 text-wrap>-->
-          <!--<div>-->
-            <!--<h3>{{video.videodata.posttime}}</h3>-->
-          <!--</div>-->
+        <!--<div>-->
+        <!--<h3>{{video.videodata.posttime}}</h3>-->
+        <!--</div>-->
         <!--</ion-col>-->
       </ion-row>
     </ion-card>
